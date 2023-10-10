@@ -1,0 +1,20 @@
+name: Terraform Plan on Dev environment
+
+on:
+  pull_request:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main repository
+        uses: actions/checkout@v3
+
+      - name: Run terraform plan on dev
+        shell: bash
+        run: |
+          echo "Run terraform plan on dev"
+          

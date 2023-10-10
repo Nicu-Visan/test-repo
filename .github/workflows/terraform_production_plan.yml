@@ -1,0 +1,22 @@
+name: 'Terraform Plan on Production environment'
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main repository
+        uses: actions/checkout@v3
+
+      - name: Run terraform plan on production
+        shell: bash
+        run: |
+          echo "Run terraform plan on production"
