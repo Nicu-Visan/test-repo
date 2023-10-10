@@ -1,0 +1,19 @@
+name: 'Terraform Apply on Production environment'
+ 
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  terraform-apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main repository
+        uses: actions/checkout@v3
+
+      - name: Run terraform apply on production
+        shell: bash
+        run: |
+          echo "Run terraform apply on production"
