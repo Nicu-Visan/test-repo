@@ -1,0 +1,24 @@
+name: Build and deploy staging
+
+on:
+  workflow_run:
+    workflows:
+      - "Terraform Apply on Staging environment"
+    branches:
+      - release
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@v3
+
+      - name: List files
+        shell: bash
+        run: |
+          echo "These are the files"
+          ls -latr

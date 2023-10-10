@@ -1,0 +1,24 @@
+name: Build and deploy production
+
+on:
+  workflow_run:
+    workflows:
+      - "Terraform Apply on Production environment"
+    branches:
+      - master
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@v3
+
+      - name: List files
+        shell: bash
+        run: |
+          echo "These are the files"
+          ls -latr
