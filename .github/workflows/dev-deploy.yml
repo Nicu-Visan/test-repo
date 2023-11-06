@@ -4,8 +4,6 @@ on:
   workflow_run:
     workflows:
       - "Terraform Apply on Dev environment"
-    branches:
-      - develop
     types:
       - completed
   workflow_dispatch:
