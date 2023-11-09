@@ -1,12 +1,6 @@
 name: 'Terraform Plan on Production environment'
 
 on:
-  pull_request:
-    branches:
-      - master
-  push:
-    branches:
-      - master
   workflow_dispatch:
 
 jobs:
