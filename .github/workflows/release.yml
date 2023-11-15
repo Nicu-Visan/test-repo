@@ -1,13 +1,14 @@
-name: Release
+name: release
 
 on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
   release:
-    name: Release
+    name: release tag
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,5 +26,6 @@ jobs:
             @semantic-release/git@10.0.1
             conventional-changelog-conventionalcommits@7.0.2
             @semantic-release/github@9.2.2
+            @semantic-release/exec@6.0.3
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
