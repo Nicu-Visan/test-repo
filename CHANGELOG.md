@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0](https://github.com/Nicu-Visan/test-repo/compare/v1.0.6...v1.1.0) (2024-01-11)
+
+
+### Features
+
+* test release version minor ([14ecd76](https://github.com/Nicu-Visan/test-repo/commit/14ecd7660df35a330629f87836b41cb8ea7ee69c))
+
 ## [1.0.6](https://github.com/Nicu-Visan/test-repo/compare/v1.0.5...v1.0.6) (2024-01-11)
 
 ## [1.0.5](https://github.com/Nicu-Visan/test-repo/compare/v1.0.4...v1.0.5) (2024-01-11)
