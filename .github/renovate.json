@@ -1,17 +1,5 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base"],
-  "packageRules": [
-    {
-      "matchPackageNames": [
-        "cimg/node",
-        "node"
-      ],
-      "matchUpdateTypes": [
-        "major",
-        "minor"
-      ],
-      "enabled": false
-    }
-  ]
+  "prConcurrentLimit": 20
 }
