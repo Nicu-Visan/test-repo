@@ -28,6 +28,7 @@ jobs:
             conventional-changelog-conventionalcommits@7.0.2
             @semantic-release/github@9.2.2
             @semantic-release/exec@6.0.3
+            @semantic-release/release-notes-generator
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
 
