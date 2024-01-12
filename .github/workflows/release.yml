@@ -31,11 +31,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
 
-      - name: Merge master -> develop
+      - name: Merge master -> release
         uses: devmasx/merge-branch@v1.4.0
         with:
           type: now
           from_branch: master
+          target_branch: release
+          github_token: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
+
+      - name: Merge release -> develop
+        uses: devmasx/merge-branch@v1.4.0
+        with:
+          type: now
+          from_branch: release
           target_branch: develop
           github_token: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
           
