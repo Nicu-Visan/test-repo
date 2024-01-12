@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.0.0](https://github.com/Nicu-Visan/test-repo/compare/v3.1.0...v4.0.0) (2024-01-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* my change
+
+### Features
+
+* Add changes ([3d25080](https://github.com/Nicu-Visan/test-repo/commit/3d250806fcf60cdfee2dbfa795c4a2ea4abde799))
+* my feature ([06bd5a9](https://github.com/Nicu-Visan/test-repo/commit/06bd5a9b5560d5235c94544dc9a87dd89eab3071))
+
 ## [3.1.0](https://github.com/Nicu-Visan/test-repo/compare/v3.0.2...v3.1.0) (2024-01-12)
 
 
