@@ -2,6 +2,7 @@
   "branches": [
     "master"
   ],
+  "tagFormat": "reco_v${version}",
   "plugins": [
     [
       "@semantic-release/release-notes-generator",
@@ -26,8 +27,7 @@
         "assets": [
           "CHANGELOG.md"
         ],
-        "message": "chore(release): version ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
-        "tagFormat": "reco_v${version}"
+        "message": "chore(release): version ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ],
     [
