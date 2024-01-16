@@ -1,16 +1,13 @@
 name: release
 
 on:
-  pull_request:
+  push:
     branches:
       - master
-    types:
-      - closed
   workflow_dispatch:
 
 jobs:
   release:
-    if: ${{ github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch' }}
     name: release tag
     runs-on: ubuntu-latest
     steps:
