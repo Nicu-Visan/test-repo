@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.1](https://github.com/Nicu-Visan/test-repo/compare/reco_v1.0.0...reco_v1.0.1) (2024-01-16)
+
 ## 1.0.0 (2024-01-16)
 
 
