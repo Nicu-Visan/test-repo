@@ -25,6 +25,5 @@ jobs:
         shell: bash
         run: |
           echo "$GITHUB_CONTEXT"
-
-          
-          
+          echo "$GITHUB_REPOSITORY_OWNER"
+          echo ${{ github.repository }}
