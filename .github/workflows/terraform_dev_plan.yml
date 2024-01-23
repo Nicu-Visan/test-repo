@@ -22,6 +22,7 @@ jobs:
         shell: bash
         run: |
           echo "path=./terraform/development" >> $GITHUB_ENV
+          echo "{{ env.path }}"
           echo "terraform_plan_path=`basename {{ env.path }}`" >> $GITHUB_ENV
           echo {{ env.terraform_plan_path }}
           
