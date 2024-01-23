@@ -25,4 +25,9 @@ jobs:
           echo "$path"
           echo "terraform_plan_path=`basename $path`" >> $GITHUB_ENV
           echo ${{ env.terraform_plan_path }}
+
+      - name: Set env
+        run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+      - name: Test
+        run: echo $GITHUB_SHA_SHORT
           
