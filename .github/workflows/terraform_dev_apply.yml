@@ -20,4 +20,11 @@ jobs:
         shell: bash
         run: |
           echo "Run terraform apply on dev"
+
+      - name: Show env variables
+        shell: bash
+        run: |
+          echo "$GITHUB_CONTEXT"
+
+          
           
