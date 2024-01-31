@@ -17,4 +17,35 @@ jobs:
         shell: bash
         run: |
           echo "Run terraform plan on dev"
+
+      - name: Test envs
+        shell: bash
+        run: |
+          echo "path=./terraform/development" >> $GITHUB_ENV
+
+          echo ${{ env.terraform_plan_path }}
+
+      - name: Set env
+        run: echo "terraform_plan_path=$(basename ${{ env.path }})" >> $GITHUB_ENV
+      - name: Test
+        run: echo ${{ env.terraform_plan_path }}
+
+      - name: Setup path
+        shell: bash
+        run: |
+          if [ "${{inputs.terraform_path }}" != "" ]; then
+           echo "path=${{inputs.terraform_path }}" >> $GITHUB_ENV
+          else
+            if [ "${{ inputs.environment }}" == "dev" ]
+             then
+               echo "path=./terraform/development" >> $GITHUB_ENV
+             else
+               echo "path=./terraform/${{ inputs.environment }}" >> $GITHUB_ENV
+            fi
+          fi
+          echo "terraform_plan_path=$(basename ${{ env.path }})" >> $GITHUB_ENV
+
+      - name: Setup terraform_plan_path
+        shell: bash
+        run: echo "${{ env.terraform_plan_path }}"
           
