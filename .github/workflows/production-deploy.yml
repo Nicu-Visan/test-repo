@@ -17,8 +17,8 @@ jobs:
       - name: "Checkout GitHub Action"
         uses: actions/checkout@v3
 
-      - name: List files
+      - name: Show ref
+        if:  ${{ contains(fromJson('["refs/heads/develop", "refs/heads/release", "refs/heads/master","refs/tags/"]'), github.ref) }}
         shell: bash
         run: |
-          echo "These are the files"
-          ls -latr
+          echo "It's working"
