@@ -49,9 +49,10 @@ jobs:
           echo "The run id is: $GITHUB_RUN_ID"
           echo "The GitHub Actor's username is: $GITHUB_ACTOR"
           echo "GitHub SHA: $GITHUB_SHA"
+          echo "ref=${{github.ref}}"
 
       - name: Show ref
-        if:  ${{ contains(fromJson('["refs/heads/develop", "refs/heads/release", "refs/heads/master","refs/tags/"]'), github.ref) }}
+        if:  ${{ contains(fromJson('["refs/heads/develop", "refs/heads/release", "refs/heads/master", "refs/tags/"]'), github.ref) }}
         shell: bash
         run: |
           echo "It's working"
