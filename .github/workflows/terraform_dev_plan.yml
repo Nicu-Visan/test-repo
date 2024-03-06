@@ -5,6 +5,13 @@ on:
     branches:
       - develop
   workflow_dispatch:
+    inputs:
+      name:
+        type: choice
+        description: Terraform config
+        options: 
+        - default
+        - full-sync  
 
 jobs:
   terraform-plan:
@@ -16,7 +23,7 @@ jobs:
       - name: Run terraform plan on dev
         shell: bash
         run: |
-          echo "Run terraform plan on dev"
+          echo "The choice is ${{ inputs.choice }}"
 
       - name: Test envs
         shell: bash
