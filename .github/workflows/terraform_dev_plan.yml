@@ -23,7 +23,7 @@ jobs:
       - name: Run terraform plan on dev
         shell: bash
         run: |
-          echo "The choice is ${{ inputs.choice }}"
+          echo "The choice is ${{ github.event.inputs.choice }}" / ${{ inputs.choice }}"
 
       - name: Test envs
         shell: bash
