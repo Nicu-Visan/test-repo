@@ -29,4 +29,4 @@ jobs:
 
       - name: Show default environment variables
         run: |
-          echo "ref=${{github.head_ref}}"
+          echo "ref=${{ basename github.ref}}"
