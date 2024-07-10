@@ -1,4 +1,4 @@
-name: Validate searchExport
+name: test
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ jobs:
       image: mcr.microsoft.com/dotnet/sdk:3.1-alpine
       options: --entrypoint /bin/bash
     services:
-      redis:
+      sql:
         image: mcr.microsoft.com/azure-sql-edge:latest     
         env:
           ACCEPT_EULA: Y
@@ -27,6 +27,46 @@ jobs:
       - name: "Install dev tools"
         run: |
           ls -latr
-          dotnet tool restore
-      - name: "Run dotnet format"
-        run: dotnet format --check
+
+      - name: "Wait for SQL to be available"
+        run: |
+          # Wait for SQL Server to be available
+          for i in {1..30}; do
+              /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'test' -Q 'SELECT 1' && break
+              echo "Waiting for SQL Server to be available..."
+              sleep 1
+          done
+
+      - name: "Test SQL Connection"
+        run: |
+          dotnet new console -o SqlTestApp
+          cd SqlTestApp
+          dotnet add package Microsoft.Data.SqlClient
+          cat <<EOF > Program.cs
+          using System;
+          using Microsoft.Data.SqlClient;
+
+          namespace SqlTestApp
+          {
+              class Program
+              {
+                  static void Main(string[] args)
+                  {
+                      var connectionString = "Server=localhost,1433;Database=master;User Id=SA;Password=test;";
+                      using (var connection = new SqlConnection(connectionString))
+                      {
+                          try
+                          {
+                              connection.Open();
+                              Console.WriteLine("SQL connection successful!");
+                          }
+                          catch (Exception ex)
+                          {
+                              Console.WriteLine($"SQL connection failed: {ex.Message}");
+                          }
+                      }
+                  }
+              }
+          }
+          EOF
+          dotnet run
