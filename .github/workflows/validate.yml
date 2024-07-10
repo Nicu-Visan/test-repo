@@ -28,13 +28,14 @@ jobs:
 
       - name: Install SQL Server Client Tools
         run: |
-          apk add --no-cache sudo
-          sudo apk add --no-cache curl
-          curl -o /tmp/mssql.asc https://packages.microsoft.com/keys/microsoft.asc
-          sudo mv /tmp/mssql.asc /etc/apk/keys/mssql.asc
-          echo "https://packages.microsoft.com/alpine/3.9/mssql-server-2019" | sudo tee -a /etc/apk/repositories
-          sudo apk update
-          sudo apk add mssql-tools unixodbc-dev
+          apt-get update
+          apt-get install -y curl apt-transport-https
+          curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+          curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+          apt-get update
+          ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools unixodbc-dev
+          echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+          source ~/.bashrc
 
       - name: Test SQL Server Connection
         run: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P test -Q "SELECT @@VERSION"        
