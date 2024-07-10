@@ -28,15 +28,15 @@ jobs:
 
       - name: Install SQL Server Client Tools
         run: |
-          apk add --no-cache curl
-          curl -o /etc/apk/keys/mssql.asc https://packages.microsoft.com/keys/microsoft.asc
-          echo "https://packages.microsoft.com/alpine/3.9/mssql-server-2019" >> /etc/apk/repositories
-          apk update
-          apk add mssql-tools unixodbc-dev
+          apk add --no-cache sudo
+          sudo apk add --no-cache curl
+          curl -o /tmp/mssql.asc https://packages.microsoft.com/keys/microsoft.asc
+          sudo mv /tmp/mssql.asc /etc/apk/keys/mssql.asc
+          echo "https://packages.microsoft.com/alpine/3.9/mssql-server-2019" | sudo tee -a /etc/apk/repositories
+          sudo apk update
+          sudo apk add mssql-tools unixodbc-dev
 
       - name: Test SQL Server Connection
-        env:
-          SQLCMDPASSWORD: test
         run: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P test -Q "SELECT @@VERSION"        
 
 
