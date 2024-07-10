@@ -18,8 +18,10 @@ jobs:
     steps:
       - name: "Checkout GitHub Action"
         uses: actions/checkout@v4
-        
+
       - name: "Install dev tools"
-        run: dotnet tool restore
+        run: |
+          ls -latr
+          dotnet tool restore
       - name: "Run dotnet format"
         run: dotnet format --check
