@@ -12,7 +12,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/mssql/server
+      image: mcr.microsoft.com/dotnet/sdk:3.1-alpine
       options: --entrypoint /bin/bash
     services:
       sql:
@@ -26,49 +26,17 @@ jobs:
       - name: "Checkout GitHub Action"
         uses: actions/checkout@v4
 
-      - name: "Install dev tools"
+      - name: Install SQL Server Client Tools
         run: |
-          ls -latr
+          apk add --no-cache curl
+          curl -o /etc/apk/keys/mssql.asc https://packages.microsoft.com/keys/microsoft.asc
+          echo "https://packages.microsoft.com/alpine/3.9/mssql-server-2019" >> /etc/apk/repositories
+          apk update
+          apk add mssql-tools unixodbc-dev
 
-      - name: "Wait for SQL to be available"
-        run: |
-          # Wait for SQL Server to be available
-          for i in {1..30}; do
-              /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'test' -Q 'SELECT 1' && break
-              echo "Waiting for SQL Server to be available..."
-              sleep 1
-          done
+      - name: Test SQL Server Connection
+        env:
+          SQLCMDPASSWORD: test
+        run: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P test -Q "SELECT @@VERSION"        
 
-      - name: "Test SQL Connection"
-        run: |
-          dotnet new console -o SqlTestApp
-          cd SqlTestApp
-          dotnet add package Microsoft.Data.SqlClient
-          cat <<EOF > Program.cs
-          using System;
-          using Microsoft.Data.SqlClient;
 
-          namespace SqlTestApp
-          {
-              class Program
-              {
-                  static void Main(string[] args)
-                  {
-                      var connectionString = "Server=localhost,1433;Database=master;User Id=SA;Password=test;";
-                      using (var connection = new SqlConnection(connectionString))
-                      {
-                          try
-                          {
-                              connection.Open();
-                              Console.WriteLine("SQL connection successful!");
-                          }
-                          catch (Exception ex)
-                          {
-                              Console.WriteLine($"SQL connection failed: {ex.Message}");
-                          }
-                      }
-                  }
-              }
-          }
-          EOF
-          dotnet run
