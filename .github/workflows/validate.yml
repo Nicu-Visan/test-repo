@@ -12,7 +12,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/dotnet/sdk:3.1-alpine
+      image: mcr.microsoft.com/mssql/server
       options: --entrypoint /bin/bash
     services:
       sql:
