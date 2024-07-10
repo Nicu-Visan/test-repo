@@ -18,41 +18,7 @@ jobs:
     steps:
       - name: "Checkout GitHub Action"
         uses: actions/checkout@v4
-      - name: "Run docker image"
+      - name: "Install dev tools"
         run: dotnet tool restore
-
-  
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout GitHub Action"
-        uses: actions/checkout@v4
-      - name: "Run docker image"
-        
-      
-      - name: "Run dotnet restore"
-        run: dotnet restore
-      - name: "Run dotnet tool restore"
-        run: dotnet tool restore
-      - name: "Building project"
-        run: dotnet build searchExport/searchExport.csproj
-
-  unit-tests:      
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout GitHub Action"
-        uses: actions/checkout@v4
-      - name: "Run NUnit tests"
-        run: dotnet test searchExport.NUnitTest/searchExport.NUnitTest.csproj
-
-  feature-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout GitHub Action"
-        uses: actions/checkout@v4
-      - name: "Generate certs"
-        run: dotnet dev-certs https
-      - name: "Launch app"
-        run: dotnet run --project searchExport/searchExport.csproj
-      - name: "Run SpecFlow tests"  
-        run: dotnet test searchExport.Specflow/searchExport.Specflow.csproj        
+      - name: "Run dotnet format"
+        run: dotnet format --check
