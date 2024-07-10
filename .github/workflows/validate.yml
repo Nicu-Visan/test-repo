@@ -14,7 +14,12 @@ jobs:
     container:
       image: mcr.microsoft.com/dotnet/sdk:3.1-alpine
       options: --entrypoint /bin/bash
-
+    services:
+      redis:
+        image: mcr.microsoft.com/azure-sql-edge:latest     
+        env:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: test
     steps:
       - name: "Checkout GitHub Action"
         uses: actions/checkout@v4
