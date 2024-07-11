@@ -14,21 +14,25 @@ jobs:
     container:
       image: mcr.microsoft.com/dotnet/sdk:3.1-alpine
       options: --entrypoint /bin/bash
+    services:
+      sql:
+        image: mcr.microsoft.com/azure-sql-edge:latest     
+        env:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: test
+        ports:
+          - 1433:1433
     steps:
       - name: "Checkout GitHub Action"
         uses: actions/checkout@v4
 
-      - name: Run mssql
-        uses: potatoqualitee/mssqlsuite@v1.7
-        with:
-          install: sqlengine, sqlclient, sqlpackage, localdb
-          version: 2017
-          sa-password: test
-          show-log: true
-
-      # - name: Run sqlclient
-      #   run: sqlcmd -S localhost -U sa -P test -d master -Q "SELECT @@version;"          
-
+      - name: Wait for SQL Server to start
+        run: |
+          until nc -z localhost 1433
+          do
+            echo "Waiting for SQL Server..."
+            sleep 2
+          done
 
     
 
