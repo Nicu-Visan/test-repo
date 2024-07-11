@@ -14,30 +14,22 @@ jobs:
     container:
       image: mcr.microsoft.com/dotnet/sdk:3.1-alpine
       options: --entrypoint /bin/bash
-    services:
-      sql:
-        image: mcr.microsoft.com/azure-sql-edge:latest     
-        env:
-          ACCEPT_EULA: Y
-          MSSQL_SA_PASSWORD: test
-        ports:
-          - 1433:1433
     steps:
       - name: "Checkout GitHub Action"
         uses: actions/checkout@v4
 
-      - name: Install SQL Server Client Tools
-        run: |
-          apt-get update
-          apt-get install -y curl apt-transport-https
-          curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-          curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
-          apt-get update
-          ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools unixodbc-dev
-          echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-          source ~/.bashrc
+      - name: Run mssql
+        uses: potatoqualitee/mssqlsuite@v1.7
+        with:
+          install: sqlengine, sqlclient, sqlpackage, localdb
+          version: 2017
+          sa-password: test
+          show-log: true
 
-      - name: Test SQL Server Connection
-        run: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P test -Q "SELECT @@VERSION"        
+      - name: Run sqlclient
+        run: sqlcmd -S localhost -U sa -P test -d master -Q "SELECT @@version;"          
+
+
+    
 
 
