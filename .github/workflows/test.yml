@@ -1,6 +1,8 @@
 name: "File existence check"
 
-on: push
+on: 
+  push:
+  workflow_dispatch:
 
 jobs:
   file_existence:
