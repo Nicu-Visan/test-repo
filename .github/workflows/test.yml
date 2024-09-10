@@ -14,7 +14,7 @@ jobs:
       - name: Setup environment
         shell: bash
         run: |
-          if [ ! -z "./" ]; then 
+          if [ -z "./" ]; then 
             echo "yes"
           else
 
