@@ -15,7 +15,6 @@ jobs:
         shell: bash
         run: |
           if [ ! -z "./" ]; then 
-            echo "existing_path=$lock_file_path" >> $GITHUB_ENV
             echo "yes"
           else
 
