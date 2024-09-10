@@ -11,6 +11,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup environment
+        shell: bash
+        run: |
+          if [ ! -z "./" ]; then 
+            echo "existing_path=$lock_file_path" >> $GITHUB_ENV
+            echo "yes"
+          else
+
       - name: Check file existence
         id: check_files
         uses: andstor/file-existence-action@v3
