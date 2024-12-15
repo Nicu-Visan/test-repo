@@ -1,0 +1,39 @@
+name: test
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:3.1-alpine
+      options: --entrypoint /bin/bash
+    services:
+      sql:
+        image: mcr.microsoft.com/azure-sql-edge:latest     
+        env:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: test
+        ports:
+          - 1433:1433
+    steps:
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@v4
+
+      - name: Wait for SQL Server to start
+        run: |
+          until nc -z 127.0.0.1 1433
+          do
+            echo "Waiting for SQL Server..."
+            sleep 2
+          done
+
+    
+
+
