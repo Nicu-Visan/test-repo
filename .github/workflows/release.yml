@@ -6,6 +6,11 @@ on:
       - master
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+  actions:  read   
+
 jobs:
   release:
     name: release tag
@@ -14,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          persist-credentials: false
+          persist-credentials: true
           fetch-depth: 0
 
       - name: Release
@@ -29,7 +34,7 @@ jobs:
             @semantic-release/github@9.2.2
             @semantic-release/exec@6.0.3
         env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Merge master -> release
         uses: devmasx/merge-branch@v1.4.0
@@ -37,7 +42,7 @@ jobs:
           type: now
           from_branch: master
           target_branch: release
-          github_token: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Merge release -> develop
         uses: devmasx/merge-branch@v1.4.0
@@ -45,5 +50,5 @@ jobs:
           type: now
           from_branch: release
           target_branch: develop
-          github_token: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           
