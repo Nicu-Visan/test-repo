@@ -5,6 +5,13 @@ on:
     branches:
       - develop
   workflow_dispatch:
+    inputs:
+      terraform-config:
+        type: choice
+        description: Terraform Config
+        options: 
+        - default
+        - full-sync  
 
 jobs:
   terraform-plan:
@@ -16,7 +23,7 @@ jobs:
       - name: Run terraform plan on dev
         shell: bash
         run: |
-          echo "Run terraform plan on dev"
+          echo "The choice is ${{ github.event.inputs.terraform-config }}"
 
       - name: Test envs
         shell: bash
