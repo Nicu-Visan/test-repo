@@ -16,20 +16,19 @@ jobs:
     name: release tag
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
       - name: Generate github auth token
         id: generate-token
         uses: actions/create-github-app-token@v1
         with:
           owner: ${{ github.repository_owner }}
           app-id: ${{ secrets.APP_ID }}
-          private-key: ${{ secrets.PRIVATE_KEY }}   
-
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-          fetch-depth: 0
-          token: ${{ steps.generate-token.outputs.token }}
+          private-key: ${{ secrets.PRIVATE_KEY }}          
           
       - name: Release
         uses: cycjimmy/semantic-release-action@v4
